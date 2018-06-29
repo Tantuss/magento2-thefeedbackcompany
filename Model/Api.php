@@ -216,13 +216,15 @@ class Api
             $responseCode = $curl->getInfo(CURLINFO_HTTP_CODE);
             $result = json_decode($response, true);
 
-            if (!empty($result['error'])) {
-                if ($result['error'] == 'No access') {
+            // It looks like the answers from the Feedbackcompany are changed.
+            if ($result['success'] == false) {
+            //if (!empty($result['error'])) {
+//                if ($result['error'] == 'No access') {
                     $this->rev->setClientToken('', $data['store_id']);
                     $msg = __('Could nog fetch new reviews, error: No access');
 
                     return $this->general->createResponseError($msg, 'token-error');
-                }
+//                }
             }
             if (!empty($result['success'])) {
                 $result = [
